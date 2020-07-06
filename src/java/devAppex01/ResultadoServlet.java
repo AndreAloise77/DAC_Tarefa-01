@@ -1,10 +1,8 @@
 package devAppex01;
 
-import utils.Calculadora;
+import utils.Calculator;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Time;
-import java.time.LocalTime;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -23,44 +21,44 @@ public class ResultadoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */ 
     
-    private int count = 1;
+    private int visitedCounter = 1;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-            String k=String.valueOf(count);
-            Cookie c = new Cookie("visit",k);
-            c.setMaxAge(11);
-            response.addCookie(c);
-            
-            PrintWriter out = response.getWriter();
-            Calculadora calculadora = new Calculadora();
             //
-            calculadora.setValor1(request.getParameter("value1"));
-            calculadora.setValor2(request.getParameter("value2"));
-            calculadora.setOperacao(request.getParameter("operacao"));
+            String cookieValue = String.valueOf(visitedCounter);
+            Cookie cookie = new Cookie("Visited", cookieValue);
+            cookie.setMaxAge(11);
+            response.addCookie(cookie);
+            //
+            PrintWriter out = response.getWriter();
+            Calculator calculator = new Calculator();
+            //
+            calculator.setValor1(request.getParameter("value1"));
+            calculator.setValor2(request.getParameter("value2"));
+            calculator.setOperacao(request.getParameter("operacao"));
             //
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ResultadoServlet</title>");            
+            out.println("<title>Resultado</title>");            
             out.println("</head>");
             out.println("<body>");
-            if(calculadora.hasError()){
-                out.println("Error: " + calculadora.getErrorMessage());
+            if(calculator.hasError()){
+                out.println("Error(s): " + calculator.getErrorMessage());
             }//if
             else{
-                out.println("Resultado: " + calculadora.calcular());
+                out.println("Resultado da Operação: " + calculator.calculateOperation());
             }//else
             out.println("<br>");
-            out.println("You visited "+c.getValue()+" times");
-            out.println("<br>");
-            out.println("<a href=\"DevAppEx01Servlet\">Voltar</a>");
+            out.println("Você acessou esta página "+cookie.getValue()+" vezes");
+            out.println("<br><br>");
+            out.println("<a href=\"DevAppEx01Servlet\"><button><font color=\"blue\">Voltar</font></button></a>");
             out.println("</body>");
             out.println("</html>");
-            count++;
-            Time timer = Time.valueOf(LocalTime.MIN);
-            
+            //
+            visitedCounter++;
     }//func
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
