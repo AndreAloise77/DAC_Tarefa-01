@@ -32,7 +32,7 @@ public class DevAppEx01Servlet extends HttpServlet {
             out.println("<form action=\"ResultadoServlet\" method=\"post\">");
             out.println("Insira um valor (real) para o primeiro campo abaixo:");
             out.println("<br>");
-            out.println("<input type=\"text\" name=\"value1\" value=\"\" placeholder=\"Valor1\" style=\"color: red\">");
+            out.println("<input type=\"text\" name=\"value1\" value=\"\" placeholder=\"Valor1\">");
             out.println("<br><br>");
             out.println("Escolha uma operação abaixo:");
             out.println("<br>");
